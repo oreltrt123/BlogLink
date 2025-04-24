@@ -2,29 +2,28 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { createDomainUrl, getDomainType } from "@/lib/utils"
 import { cn } from "@/lib/utils"
 
 export function Navigation() {
   const pathname = usePathname()
-  const domainType = getDomainType()
+  const isOnBlogPage = pathname.startsWith("/blog")
 
   // Define navigation items for both domains
   const mainNavItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
-    { name: "Blog", path: "/", domain: "blog" },
+    { name: "Blog", path: "/blog" },
   ]
 
   const blogNavItems = [
-    { name: "Main Site", path: "/", domain: "main" },
-    { name: "Blog Home", path: "/" },
-    { name: "Categories", path: "/categories" },
+    { name: "Main Site", path: "/" },
+    { name: "Blog Home", path: "/blog" },
+    { name: "Categories", path: "/blog/categories" },
   ]
 
-  // Select the appropriate navigation items based on the current domain
-  const navItems = domainType === "blog" ? blogNavItems : mainNavItems
+  // Select the appropriate navigation items based on the current path
+  const navItems = isOnBlogPage ? blogNavItems : mainNavItems
 
   return (
     <nav className="bg-white shadow-sm">
@@ -32,7 +31,7 @@ export function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              {domainType === "blog" ? (
+              {isOnBlogPage ? (
                 <span className="text-xl font-bold text-gray-900">Blog</span>
               ) : (
                 <span className="text-xl font-bold text-gray-900">My Website</span>
@@ -40,19 +39,15 @@ export function Navigation() {
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {navItems.map((item) => {
-                // Determine if this is a cross-domain link
-                const isCrossDomain = item.domain && item.domain !== domainType
-
-                // Create the appropriate href
-                const href = isCrossDomain ? createDomainUrl(item.path, item.domain as "main" | "blog") : item.path
-
                 // Check if the item is active
-                const isActive = !isCrossDomain && pathname === item.path
+                const isActive =
+                  pathname === item.path ||
+                  (item.path === "/blog" && pathname.startsWith("/blog") && item.name === "Blog Home")
 
                 return (
                   <Link
                     key={`${item.name}-${item.path}`}
-                    href={href}
+                    href={item.path}
                     className={cn(
                       "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
                       isActive
