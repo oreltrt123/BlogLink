@@ -8,7 +8,7 @@ export function Navigation() {
   const pathname = usePathname()
   const isOnBlogPage = pathname.startsWith("/blog")
 
-  // Define navigation items for both domains
+  // Define navigation items for both sections
   const mainNavItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -31,11 +31,9 @@ export function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              {isOnBlogPage ? (
-                <span className="text-xl font-bold text-gray-900">Blog</span>
-              ) : (
-                <span className="text-xl font-bold text-gray-900">My Website</span>
-              )}
+              <Link href="/" className="text-xl font-bold text-gray-900">
+                {isOnBlogPage ? "My Blog" : "My Website"}
+              </Link>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {navItems.map((item) => {

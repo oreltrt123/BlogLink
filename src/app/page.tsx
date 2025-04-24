@@ -2,35 +2,32 @@ import Link from "next/link"
 
 export default function Home() {
   return (
-    <div className="bg-gray-100 min-h-screen py-12">
-      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div className="bg-white overflow-hidden shadow rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <h1 className="text-3xl font-extrabold text-gray-900">Welcome to Our Website!</h1>
-            <p className="mt-3 text-base text-gray-500">
-              This is a simple landing page built with Next.js and Tailwind CSS.
-            </p>
-            <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-              <div className="rounded-md shadow">
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
-                >
-                  Visit Our Blog
-                </Link>
-              </div>
-              <div className="mt-3 sm:mt-0 sm:ml-3">
-                <Link
-                  href="/about"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
-                >
-                  Learn More
-                </Link>
-              </div>
-            </div>
-          </div>
+    <div className="space-y-8">
+      <section className="text-center py-12">
+        <h1 className="text-4xl font-bold mb-4">Welcome to My Website</h1>
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          This is the main domain of our website. We also have a blog available.
+        </p>
+        <div className="mt-8">
+          <Link
+            href="/blog"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+          >
+            Visit Our Blog
+          </Link>
         </div>
-      </div>
+      </section>
+
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="bg-white shadow rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-2">Feature {i}</h2>
+            <p className="text-gray-600">
+              This is a feature description for the main website. It showcases what we offer.
+            </p>
+          </div>
+        ))}
+      </section>
     </div>
   )
 }
